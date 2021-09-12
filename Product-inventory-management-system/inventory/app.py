@@ -355,3 +355,38 @@ def delete():
         db.commit()
 
         return redirect(url_for('product'))
+
+
+@app.route('/edit', methods=['POST', 'GET'])
+def edit():
+    type_ = request.args.get('type')
+    db = sqlite3.connect(DATABASE_NAME)
+    cursor = db.cursor()
+
+    if type_ == 'location' and request.method == 'POST':
+        loc_id = request.form['loc_id']
+        loc_name = request.form['loc_name']
+
+        if loc_name:
+            cursor.execute("UPDATE location SET loc_name = ? WHERE loc_id == ?", (loc_name, str(loc_id)))
+            db.commit()
+
+        return redirect(url_for('location'))
+
+    elif type_ == 'product' and request.method == 'POST':
+        prod_id = request.form['prod_id']
+        prod_name = request.form['prod_name']
+        prod_quantity = request.form['prod_quantity']
+
+        if prod_name:
+            cursor.execute("UPDATE products SET prod_name = ? WHERE prod_id == ?", (prod_name, str(prod_id)))
+        if prod_quantity:
+            cursor.execute("SELECT prod_quantity FROM products WHERE prod_id = ?", (prod_id,))
+            old_prod_quantity = cursor.fetchone()[0]
+            cursor.execute("UPDATE products SET prod_quantity = ?, unallocated_quantity =  unallocated_quantity + ? - ?"
+                           "WHERE prod_id == ?", (prod_quantity, prod_quantity, old_prod_quantity, str(prod_id)))
+        db.commit()
+
+        return redirect(url_for('product'))
+
+    return render(url_for(type_))
