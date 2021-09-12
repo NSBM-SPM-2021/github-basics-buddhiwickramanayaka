@@ -35,3 +35,7 @@ how to install flask --> ($ pip3 install flask )
 	sourceCode console
 	$ python3 -m flask run
 
+After you run this file. you can see- 
+The application can be accessed at http://127.0.0.1:5000/ in your browser
+
+copy the localhost parth (http://127.0.0.1:5000/), and past in your browser and enjoy runing application. 
