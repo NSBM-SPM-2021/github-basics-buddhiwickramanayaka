@@ -302,3 +302,13 @@ def movement():
                 msg = f"An error occurred: {e.args[0]}"
             else:
                 msg = "Transaction added successfully"
+
+        # print a transaction message if it is exist.
+        if msg:
+            print(msg)
+            return redirect(url_for('movement'))
+
+    return render('movement.html', title="ProductMovement",
+                  link=link, trans_message=msg,
+                  products=products, locations=locations, allocated=alloc_json,
+                  logs=logistics_data, database=log_summary)
