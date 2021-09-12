@@ -280,3 +280,25 @@ def movement():
                 msg = f"An error occurred: {e.args[0]}"
             else:
                 msg = "Transaction added successfully"
+
+        else:
+            try:
+                cursor.execute("SELECT loc_id FROM location WHERE loc_name == ?", (from_loc,))
+                from_loc = ''.join([str(x[0]) for x in cursor.fetchall()])
+
+                cursor.execute("SELECT loc_id FROM location WHERE loc_name == ?", (to_loc,))
+                to_loc = ''.join([str(x[0]) for x in cursor.fetchall()])
+
+                cursor.execute("SELECT prod_id FROM products WHERE prod_name == ?", (prod_name,))
+                prod_id = ''.join([str(x[0]) for x in cursor.fetchall()])
+
+                cursor.execute("""
+                INSERT INTO logistics (prod_id, from_loc_id, to_loc_id, prod_quantity)
+                VALUES (?, ?, ?, ?)
+                """, (prod_id, from_loc, to_loc, quantity))
+                db.commit()
+
+            except sqlite3.Error as e:
+                msg = f"An error occurred: {e.args[0]}"
+            else:
+                msg = "Transaction added successfully"
