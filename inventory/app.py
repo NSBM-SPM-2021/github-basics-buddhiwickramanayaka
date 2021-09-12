@@ -43,8 +43,25 @@ def init_database():
                     END;
 
     """)
+
     # initialize page content
-    cursor.execute("""
+    cursor.execute
+    ("""
     CREATE TABLE IF NOT EXISTS location(loc_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                  loc_name TEXT UNIQUE NOT NULL);
     """)
+
+     # initialize page content
+    cursor.execute
+    ("""
+    CREATE TABLE IF NOT EXISTS logistics(trans_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                prod_id INTEGER NOT NULL,
+                                from_loc_id INTEGER NULL,
+                                to_loc_id INTEGER NULL,
+                                prod_quantity INTEGER NOT NULL,
+                                trans_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                FOREIGN KEY(prod_id) REFERENCES products(prod_id),
+                                FOREIGN KEY(from_loc_id) REFERENCES location(loc_id),
+                                FOREIGN KEY(to_loc_id) REFERENCES location(loc_id));
+    """)
+    db.commit()
