@@ -43,3 +43,8 @@ def init_database():
                     END;
 
     """)
+    # initialize page content
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS location(loc_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                 loc_name TEXT UNIQUE NOT NULL);
+    """)
