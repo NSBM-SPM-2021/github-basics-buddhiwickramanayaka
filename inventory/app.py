@@ -65,3 +65,27 @@ def init_database():
                                 FOREIGN KEY(to_loc_id) REFERENCES location(loc_id));
     """)
     db.commit()
+
+
+@app.route('/')
+def summary():
+    init_database()
+    msg = None
+    q_data, warehouse, products = None, None, None
+    db = sqlite3.connect(DATABASE_NAME)
+    cursor = db.cursor()
+    try:
+        cursor.execute("SELECT * FROM location") 
+        warehouse = cursor.fetchall()
+        cursor.execute("SELECT * FROM products")
+        products = cursor.fetchall()
+        cursor.execute("""
+        SELECT prod_name, unallocated_quantity, prod_quantity FROM products
+        """)
+        q_data = cursor.fetchall()
+    except sqlite3.Error as e:
+        msg = f"An error occurred: {e.args[0]}"
+    if msg:
+        print(msg)
+
+    return render('index.html', link=link, title="Summary", warehouses=warehouse, products=products, database=q_data)
