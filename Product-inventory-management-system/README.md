@@ -6,7 +6,7 @@ Requirements -Python 3.9.7 or up version,flask,VS codes,
 how to install flask --> ($ pip3 install flask )
 
 
-* How to Installation this web application 
+* How to Installation and Run this web application 
 
  ** Clone the git repository:
 
@@ -22,4 +22,16 @@ how to install flask --> ($ pip3 install flask )
 	sourceCode console
 	1) -- $ pip3 install -r requirements.txt
 	2) -- $ pip3 install flask
+
+
+** Starting project with CMD
+
+	sourceCode console
+	$ cd product-eventory-management-system/inventory
+
+
+** run the application by typing the following command in your CMD terminal***
+
+	sourceCode console
+	$ python3 -m flask run
 
