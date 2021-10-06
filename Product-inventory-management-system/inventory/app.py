@@ -391,5 +391,3 @@ def edit():
 
     return render(url_for(type_))
 
-if __name__ == "_main_":
-    app.run()
